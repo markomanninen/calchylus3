@@ -3,7 +3,7 @@
 ; Calchylus 3 - Lambda calculus with Hy
 ;
 ; Source:
-; https://github.com/markomanninen/calchylus/
+; https://github.com/markomanninen/calchylus3/
 ;
 ; Install:
 ; $ pip install calchylus3
