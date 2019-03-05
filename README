@@ -68,6 +68,7 @@ For people willing to get hands quickly on coding:
 .. code-block:: hylang
 
 	(require [calchylus3.lambdas [*]])
+	(import [calchylus3.lambdas [*]])
 
 **Initialize**
 

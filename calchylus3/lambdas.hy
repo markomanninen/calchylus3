@@ -1,19 +1,19 @@
 #! /usr/bin/env hy
 ;----------------------------------------------
-; Calchylus2 - Lambda calculus with Hy
+; Calchylus 3 - Lambda calculus with Hy
 ;
 ; Source:
 ; https://github.com/markomanninen/calchylus/
 ;
 ; Install:
-; $ pip install calchylus
+; $ pip install calchylus3
 ;
 ; Open Hy:
 ; $ hy
 ;
 ; Import library:
-; (require [calchylus2.lambdas [*]])
-; (import [calchylus2.lambdas [*]])
+; (require [calchylus3.lambdas [*]])
+; (import [calchylus3.lambdas [*]])
 ;
 ; Initialize with macros:
 ; (with-macros λ)
