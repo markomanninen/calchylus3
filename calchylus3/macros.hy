@@ -143,7 +143,7 @@
              EMPTY (PAIR NIL NIL)
              EMPTY? (~binder l (TAIL l (~binder h (~binder t FALSE))))
              NIL? ZERO?
-             INDEX (~binder i l (HEAD [(i TAIL) l]))
+             INDEX (~binder i l (HEAD [[i TAIL] l]))
              PREPEND PAIR
              FIRST HEAD
              SECOND (~binder l (HEAD (TAIL l)))
