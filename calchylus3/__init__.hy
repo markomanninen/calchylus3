@@ -21,10 +21,10 @@
 ; (without-macros λ)
 ;
 ; For example church number two:
-; ((λ x y [x [x y]]) a b) -> (a (a b))
+; ((λ x y [x [x y]]) a b) -> [a [a b]]
 ;
 ; or if macros are included, then:
-; (TWO a b) -> (a (a b))
+; (TWO a b) -> [a [a b]]
 ;
 ; Documentation: http://calchylus.readthedocs.io/
 ; Author: Marko Manninen <elonmedia@gmail.com>
@@ -32,4 +32,4 @@
 ; Licence: MIT
 ;----------------------------------------------
 
-(setv __version__ "v0.1.1")
+(setv __version__ "v0.1.2")

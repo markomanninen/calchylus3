@@ -21,7 +21,6 @@ For people willing to get hands quickly on coding:
 .. code-block:: hylang
 
 	(require [calchylus3.lambdas [*]])
-	(import [calchylus3.lambdas [*]])
 
 **Initialize**
 
@@ -33,11 +32,11 @@ For people willing to get hands quickly on coding:
 
 .. code-block:: hylang
 
-	(L x y (x (x (x (x (x y))))) a b) ; output: (a (a (a (a (a b)))))
+	((L x y [x [x y]]) 'a 'b) ; output: [a [a b]]
 
 .. code-block:: hylang
 
-	(FIBONACCI SEVEN 'x 'y) ; output: (x (x (x (x (x (x (x (x (x (x (x (x (x y)))))))))))))
+	(FIBONACCI SEVEN 'x 'y) ; output: [x [x [x [x [x [x [x [x [x [x [x [x [x y]]]]]]]]]]]]]
 
 
 Explanation
@@ -82,13 +81,13 @@ Now, we are ready to evaluate Lambda expressions. Here we apply
 
 .. code-block:: hylang
 
-	(L x y (x (x (x (x (x y))))) a b)
+	((L x y [x [x [x [x [x y]]]]]) 'a 'b)
 
 |Output:|
 
 .. code-block:: text
 
-	(a (a (a (a (a b)))))
+	[a [a [a [a [a b]]]]]
 
 Without going deeper into this yet, we can see that all ``x`` got replaced by
 ``a`` and all ``y`` got replaced by ``b``.
@@ -105,7 +104,7 @@ Church numeral ``SEVEN`` and the ``FIBONACCI`` shorthands:
 
 .. code-block:: text
 
-	(x (x (x (x (x (x (x (x (x (x (x (x (x y)))))))))))))
+	[x [x [x [x [x [x [x [x [x [x [x [x [x y]]]]]]]]]]]]]
 
 That is the Church numeral 13, the seventh `Fibonacci number`_.
 
