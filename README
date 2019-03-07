@@ -68,7 +68,6 @@ For people willing to get hands quickly on coding:
 .. code-block:: hylang
 
 	(require [calchylus3.lambdas [*]])
-	(import [calchylus3.lambdas [*]])
 
 **Initialize**
 
@@ -80,7 +79,7 @@ For people willing to get hands quickly on coding:
 
 .. code-block:: hylang
 
-	(L x y (x (x (x (x (x y))))) a b) ; output: (a (a (a (a (a b)))))
+	((L x y [x [x y]]) a b) ; output: (a (a b))
 
 .. code-block:: hylang
 
