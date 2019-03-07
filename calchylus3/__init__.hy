@@ -1,6 +1,6 @@
 #! /usr/bin/env hy
 ;----------------------------------------------
-; Calchylus - Lambda calculus with Hy
+; Calchylus 3 - Lambda calculus with Hy
 ;
 ; Source:
 ; https://github.com/markomanninen/calchylus3/
@@ -13,19 +13,23 @@
 ;
 ; Import library:
 ; (require [calchylus3.lambdas [*]])
-; (import [calchylus3.lambdas [*]])
 ;
-; Initialize macros:
-; (with-macros L)
+; Initialize with macros:
+; (with-macros λ)
 ;
-; Use:
-; (L x y (x (x y)) a b) ->
-; (a (a b))
+; or without macros
+; (without-macros λ)
 ;
-; Documentation: http://calchylus3.readthedocs.io/
+; For example church number two:
+; ((λ x y [x [x y]]) a b) -> (a (a b))
+;
+; or if macros are included, then:
+; (TWO a b) -> (a (a b))
+;
+; Documentation: http://calchylus.readthedocs.io/
 ; Author: Marko Manninen <elonmedia@gmail.com>
 ; Copyright: Marko Manninen (c) 2019
 ; Licence: MIT
 ;----------------------------------------------
 
-(setv __version__ "v0.1.0")
+(setv __version__ "v0.1.1")
