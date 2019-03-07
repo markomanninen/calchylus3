@@ -6,7 +6,7 @@ import os, io
 
 # deploy to pypi: python setup.py sdist upload
 
-version = 'v0.1.1'
+version = 'v0.1.2'
 name = 'calchylus3'
 
 def read(fname):
