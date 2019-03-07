@@ -13,19 +13,18 @@
 ;
 ; Import library:
 ; (require [calchylus3.lambdas [*]])
-; (import [calchylus3.lambdas [*]])
 ;
 ; Initialize with macros:
 ; (with-macros λ)
+;
 ; or without macros
 ; (without-macros λ)
 ;
 ; For example church number two:
-; (λ x y (x (x y)) a b) ->
-; (a (a b))
+; ((λ x y [x [x y]]) a b) -> (a (a b))
+;
 ; or if macros are included, then:
-; (TWO a b) ->
-; (a (a b))
+; (TWO a b) -> (a (a b))
 ;
 ; Documentation: http://calchylus.readthedocs.io/
 ; Author: Marko Manninen <elonmedia@gmail.com>
@@ -35,12 +34,15 @@
 
 (defmacro with-macros [binder &optional [delimitter ""]]
   `(do
+    (import hy)
     (init-system ~binder ~delimitter)
     (require [calchylus3.macros [*]])
     (init-macros ~binder)))
 
 (defmacro without-macros [binder &optional [delimitter ""]]
-   `(init-system ~binder ~delimitter))
+   `(do
+     (import hy)
+     (init-system ~binder ~delimitter)))
 
 (defmacro init-system [binder delimitter]
   `(do
@@ -50,9 +52,9 @@
             binder '~binder
             ; this is required for pretty print to work. otherwise delimitter is regarded as an unknown symbol.
             delimitter '~delimitter)
-      ; extend output rather than in place
+      ; extend output rather than in place. used in macros too
       (defn extend [a b] (.extend a b) a)
-      ; reverse ouput rather than in place
+      ; reverse ouput rather than in place. used in macros too
       (defn reverse [a] (.reverse a) a)
       ; is instance a function abstraction?
       (defn function? [e] (instance? Function e))
@@ -67,30 +69,18 @@
         (if b (extend a b) a))
       ; head normal form of the lambda application
       (defn normalize [e]
-        (if-not (coll? e) e
+        (if (coll? e)
           (if (function? (first e))
             (apply* (first e) (list (rest e)))
             (if (function? e) e
               ; with HyList object instead of native list, we enable pretty printing
               (do (setv x (hy.HyList (map normalize e)))
-                  (if (function? (first x)) (normalize x) x))))))
+                  (if (function? (first x)) (normalize x) x)))) e))
       ; prettier lambda function abstraction representation
       (defn repr [e]
         (if (and (coll? e) (not (function? e)))
           ; using HyList object comma separated list representations becomes more clear
           (hy.HyList (map repr e)) e))
-      ; lambda term / variable
-      (defclass Variable []
-        (defn --init-- [self x]
-          ; crate the human readable name for the variable
-          (setv self.x (name x)))
-        ; show the human readable name
-        (defn --repr-- [self] self.x)
-        ; if variable is the first element of the expression, then hy tries to use it
-        ; as a function callee, thus we need to return both the callee and the
-        ; possible arguments back intact
-        (defn --call-- [self &rest expr]
-          (extend [self] expr)))
       ; lambda function abstraction
       (defclass Function [hy.HyList]
         ; pretty representation of the function. normally function in python / hy doesn't have
@@ -112,5 +102,5 @@
     ; main lambda macro
     (defmacro ~binder [&rest expr]
       (reduce (fn [body arg]
-        `((fn[] (setv ~arg (Variable '~arg))
+        `((fn[] (setv ~arg '~arg)
           (Function ['~arg ~body (fn [~arg] ~body)])))) (reverse (list expr))))))
