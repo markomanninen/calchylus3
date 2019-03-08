@@ -63,13 +63,13 @@ For people willing to get hands quickly on coding:
 
 	$ hy
 
-**Import**
+**Import lambda library**
 
 .. code-block:: hylang
 
 	(require [calchylus3.lambdas [*]])
 
-**Initialize**
+**Initialize lambda macros**
 
 .. code-block:: hylang
 
@@ -79,11 +79,11 @@ For people willing to get hands quickly on coding:
 
 .. code-block:: hylang
 
-	((L x y [x [x y]]) 'a 'b) ; output: [a [a b]]
+	((L x y [x [x y]]) 'a 'b) ; output: (a (a b))
 
 .. code-block:: hylang
 
-	(FIBONACCI SEVEN 'x 'y) ; output: [x [x [x [x [x [x [x [x [x [x [x [x [x y]]]]]]]]]]]]]
+	(FIBONACCI SEVEN 'x 'y) ; output: (x (x (x (x (x (x (x (x (x (x (x (x (x y)))))))))))))
 
 
 Documentation

@@ -1,8 +1,9 @@
 #! /usr/bin/python3
 # -*- coding: utf-8 -*-
 
+__version__ = "0.1.3"
+
 import hy
-#import calchylus
 from hy.importer import hy_eval, import_buffer_to_hst
 
 def heval(tokens):

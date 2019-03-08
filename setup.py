@@ -2,11 +2,10 @@ try:
   from setuptools import setup
 except ImportError:
   from distutils.core import setup
-import os, io
+import os, io, calchylus3
 
 # deploy to pypi: python setup.py sdist upload
 
-version = 'v0.1.2'
 name = 'calchylus3'
 
 def read(fname):
@@ -20,7 +19,7 @@ setup(
     name: ['*.hy']
   },
   install_requires = ['hy==0.15.0'],
-  version = version,
+  version = calchylus3.__version__,
   description = 'Calchylus 3 - Lambda Calculus with Hy',
   long_description = read('README'),
   author = 'Marko Manninen',

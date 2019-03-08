@@ -1,5 +1,11 @@
 #! /usr/bin/python3
 # -*- coding: utf-8 -*-
+#
+# Use from hy:
+#
+# (require [minifiedpy [*]])
+# (import [minifiedpy [F]])
+# (print ((L x x) 1)) -> 1
 import hy
 from hy.core.language import first, is_coll, is_instance, last, reduce, rest, second
 from hy import HyExpression, HyList, HySymbol

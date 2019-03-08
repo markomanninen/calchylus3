@@ -26,7 +26,7 @@
 ; or if macros are included, then:
 ; (TWO 'a 'b) -> (a (a b))
 ;
-; Documentation: http://calchylus.readthedocs.io/
+; Documentation: http://calchylus3.readthedocs.io/
 ; Author: Marko Manninen <elonmedia@gmail.com>
 ; Copyright: Marko Manninen (c) 2019
 ; Licence: MIT
@@ -47,10 +47,9 @@
 (defmacro init-system [binder delimitter]
   `(do
     (eval-and-compile
-      (setv ; lambda expression macro name.
-            ; this is required for macros to work. otherwise binder is regarded as an unknown symbol.
+      (setv ; lambda expression macro name
             binder '~binder
-            ; this is required for pretty print to work. otherwise delimitter is regarded as an unknown symbol.
+            ; this is required for pretty print to work or otherwise delimitter is regarded as an unknown symbol
             delimitter '~delimitter)
       ; extend output rather than in place. used in macros too
       (defn extend [a b] (.extend a b) a)
@@ -73,7 +72,6 @@
           (if (function? (first e))
             (apply* (first e) (list (rest e)))
             (if (function? e) e
-              ; with HyList object instead of native list, we enable pretty printing
               (do (setv x (list (map normalize e)))
                   (if (function? (first x)) (normalize x) x)))) e))
       ; helper for pretty printter
@@ -82,8 +80,7 @@
       ; prettier lambda function abstraction representation
       (defn repr [e]
         (if (and (coll? e) (not (function? e)))
-          ; using HyList object comma separated list representations becomes more clear
-          (repr* (map str (map repr e))) e))
+          (repr* (list (map str (map repr e)))) e))
       ; lambda function abstraction
       (defclass Function [list]
         ; pretty representation of the function. normally function in python / hy doesn't have
