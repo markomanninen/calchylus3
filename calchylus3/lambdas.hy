@@ -21,10 +21,10 @@
 ; (without-macros λ)
 ;
 ; For example church number two:
-; ((λ x y [x [x y]]) a b) -> [a [a b]]
+; ((λ x y [x [x y]]) 'a 'b) -> (a (a b))
 ;
 ; or if macros are included, then:
-; (TWO a b) -> [a [a b]]
+; (TWO 'a 'b) -> (a (a b))
 ;
 ; Documentation: http://calchylus.readthedocs.io/
 ; Author: Marko Manninen <elonmedia@gmail.com>
@@ -74,15 +74,18 @@
             (apply* (first e) (list (rest e)))
             (if (function? e) e
               ; with HyList object instead of native list, we enable pretty printing
-              (do (setv x (hy.HyList (map normalize e)))
+              (do (setv x (list (map normalize e)))
                   (if (function? (first x)) (normalize x) x)))) e))
+      ; helper for pretty printter
+      (defn repr* [e]
+        (if (coll? e) (% "(%s)" (.join " " (map repr* e))) (str e)))
       ; prettier lambda function abstraction representation
       (defn repr [e]
         (if (and (coll? e) (not (function? e)))
           ; using HyList object comma separated list representations becomes more clear
-          (hy.HyList (map repr e)) e))
+          (repr* (map str (map repr e))) e))
       ; lambda function abstraction
-      (defclass Function [hy.HyList]
+      (defclass Function [list]
         ; pretty representation of the function. normally function in python / hy doesn't have
         ; any suitable printing format because of the arbitrary content of the function.
         ; in lambda calculus function body is structured in a very strict manner so we can
@@ -102,5 +105,5 @@
     ; main lambda macro
     (defmacro ~binder [&rest expr]
       (reduce (fn [body arg]
-        `((fn[] (setv ~arg '~arg)
+        `((fn[] (setv ~arg(str'~arg))
           (Function ['~arg ~body (fn [~arg] ~body)])))) (reverse (list expr))))))
