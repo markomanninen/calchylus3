@@ -37,12 +37,12 @@ representing well known Lambda forms, ``calchylus3`` provides all necessary
 elements for boolean, integers, and list data types as well as
 conditionals, loops, variable setters, imperative do structure, logical
 connectives, and arithmetic operators. You can build upon that, for example
-`real numbers`_, even negative complex numbers if that makes any sense. Your
+`real numbers`_ , even negative complex numbers if that makes any sense. Your
 imagination is really the only limit.
 
 Finally, when investigating the open source ``calchylus3`` implementation that is
 hosted on `GitHub`_ , one can expect to get a good understanding of the higher
-order functions and the `combinatory logic`_, not the least of the fixed point
+order functions and the `combinatory logic`_ , not the least of the fixed point
 combinator or shortly, ϒ combinator.
 
 
@@ -79,11 +79,11 @@ For people willing to get hands quickly on coding:
 
 .. code-block:: hylang
 
-	((L x y [x [x y]]) 'a 'b) ; output: (a (a b))
+	(print* ((L x y [x [x y]]) 'a 'b)) ; output: (a (a b))
 
 .. code-block:: hylang
 
-	(FIBONACCI SEVEN 'x 'y) ; output: (x (x (x (x (x (x (x (x (x (x (x (x (x y)))))))))))))
+	(print* (FIBONACCI SEVEN 'x 'y)) ; output: (x (x (x (x (x (x (x (x (x (x (x (x (x y)))))))))))))
 
 
 Documentation
