@@ -51,6 +51,8 @@
             binder '~binder
             ; this is required for pretty print to work or otherwise delimitter is regarded as an unknown symbol
             delimitter '~delimitter)
+      ; print nested lists with pretty nested parentheses
+      (defn print* [x] (print (repr* x)))
       ; extend output rather than in place. used in macros too
       (defn extend [a b] (.extend a b) a)
       ; reverse ouput rather than in place. used in macros too
@@ -80,7 +82,7 @@
       ; prettier lambda function abstraction representation
       (defn repr [e]
         (if (and (coll? e) (not (function? e)))
-          (repr* (list (map str (map repr e)))) e))
+          (repr* (map str (map repr e))) e))
       ; lambda function abstraction
       (defclass Function [list]
         ; pretty representation of the function. normally function in python / hy doesn't have
@@ -94,10 +96,9 @@
             (if delimitter (% " %s " (, (.strip delimitter "\\"))) " ") (repr (second self)))))
         ; the function body to the normal head form (call by value)
         (defn --call-- [self value &rest args]
-          (setv expr (normalize ((last self) value)))
           ; if extra arguments are given then they are curryed forward
           ; insteadd of using apply we use a slightly modified functionality with apply*
-          (if args (apply* expr (list args)) expr))))
+          ((fn [x] (if args (apply* x (list args)) x)) (normalize ((last self) value))))))
 
     ; main lambda macro
     (defmacro ~binder [&rest expr]
