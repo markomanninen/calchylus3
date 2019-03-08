@@ -7,8 +7,9 @@
   `(do
     (eval-and-compile
         ; named variables. multiple variables can be associated first, then the last expression is the body
-        ; (LET a 1 b 2 (a b)) ->
-        ; ((L a b (a b)) 1 2)
+        ; (LET a 1 b 2 [a b]) ->
+        ; ((L a b [a b]) 1 2) ->
+        ; [1 2]
         (defmacro LET [&rest args]
           ; all odd parameters except the last are argument names
           (setv x (if args (cut (cut args 0 (len args) 2) 0 -1) ())
@@ -18,8 +19,9 @@
 
         ; same as LET but preceding variables are evaluated before using them on the body so that
         ; variables associated previously can be used on the later variables
-        ; (LET* a 1 b a (a b)) ->
-        ; (LET a 1 (LET b a (a b))) -> (1 1)
+        ; (LET* a 1 b a [a b]) ->
+        ; (LET a 1 (LET b a [a b])) ->
+        ; [1 1]
         (defmacro LET* [&rest code]
           (setv ; the last parameter in the expression is the body
                 expr (if code (last code) ())
@@ -34,8 +36,9 @@
           (if args expr code))
 
         ; the do structure for imperative style command sequences
-        ; (DO (LET a 1) (LET b 2) (a b)) ->
-        ; (LET a 1 (LET b 2 (a b))) -> (1 2)
+        ; (DO (LET a 1) (LET b 2) [a b]) ->
+        ; (LET a 1 (LET b 2 [a b])) ->
+        ; [1 2]
         (defmacro DO [&rest args]
           ; fold right with reduce reverse
           (reduce (fn [x y] (extend y [x]))
@@ -149,10 +152,10 @@
              SECOND (~binder l (HEAD (TAIL l)))
              THIRD (~binder l (HEAD (TAIL (TAIL l)))))
         ; get church number by calling SUCC as many times as given in the argument
-        (defn N [m]
-          (setv n ZERO)
-          (while (pos? m)
-            (setv n (SUCC n) m (dec m))) n)
+        ;(defn N [m]
+        ;  (setv n ZERO)
+        ;  (while (pos? m)
+        ;    (setv n (SUCC n) m (dec m))) n)
         (defn FLAT [l]
           (while (not (MUN (EMPTY? l)))
             (do (yield (FIRST l))
@@ -163,23 +166,23 @@
           (while (> n 0)
             (setv n (dec n) m (SUCC m))) m)
         ; integers
-        ; -4 -> (PAIR FALSE FOUR)
+        ; #ℤ -4 -> (PAIR FALSE FOUR)
         (defmacro ℤ+ [number] `(PAIR TRUE #ℕ ~number))
         (defmacro ℤ- [number] `(PAIR FALSE #ℕ ~number))
         (deftag ℤ [number] (if (pos? number) `(ℤ+ ~number) `(ℤ- ~number)))
         ; rational numbers
-        ; -1/7 -> (PAIR FALSE (PAIR ONE SEVEN))
+        ; #ℚ -1/7 -> (PAIR FALSE (PAIR ONE SEVEN))
         (defmacro ℚ+ [number] `(PAIR TRUE (PAIR #ℕ ~(second number) #ℕ ~(last number))))
         (defmacro ℚ- [number] `(PAIR FALSE (PAIR #ℕ ~(second number) #ℕ ~(last number))))
         (deftag ℚ [number]
           `(PAIR (if (pos? ~number) TRUE FALSE)
             (PAIR #ℕ ~(second number) #ℕ ~(last number))))
         ; imaginary numbers
-        ; #ℂ-0.5+2j -> (PAIR (PAIR FALSE (PAIR ONE TWO)) (PAIR TRUE (PAIR TWO ONE)))
+        ; #ℂ -0.5+2j -> (PAIR (PAIR FALSE (PAIR ONE TWO)) (PAIR TRUE (PAIR TWO ONE)))
         (deftag ℂ [number]
           (import [fractions [Fraction]])
           (setv real (Fraction (abs number.real))
-               imag (Fraction (abs number.imag)))
+                imag (Fraction (abs number.imag)))
           `(do
             (PAIR
               (PAIR (if (pos? ~number.real) TRUE FALSE)
