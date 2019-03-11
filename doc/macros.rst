@@ -22,12 +22,12 @@ Common combinators
 - ``S`` - apply x to y in the domain of z
 - ``K`` - take the first, leave the second
 - ``K′`` - take the second, leave the first
-- ``I`` - identity
-- ``B`` - identity
-- ``C`` - identity
-- ``W`` - identity
-- ``W′`` - identity
-- ``W′`` - identity
+- ``I`` - return the given argument aka identity function
+- ``B`` - composition of the arguments x and y applied to the argument z
+- ``C`` - swaps the arguments y and z
+- ``W`` - duplicates the argument y
+- ``W′`` - append the second argument y
+- ``W′`` - append the first argument x
 - ``X`` - iota
 - ``X′`` - anti iota
 - ``Y`` - Y-combinator
@@ -54,12 +54,14 @@ Logical connective constructors
   - ``AND`` - a conjuction
   - ``OR`` - a disjunction
   - ``XOR`` - an exclusive disjunction
-  - ``IMP`` - a material implication
+  - ``IMP`` - an implication
+  - ``MIMP`` - a material implication
   - ``EQV`` - an equivalence / a material biconditional, same as xnor
-  - ``NAND`` - not a conjuction
+  - ``NAND`` - not a conjuction, all other `logic gates <https://en.wikipedia.org/wiki/NAND_logic>`__ are doable with this and ``XNOR``
   - ``NOR`` - not a disjunction
-  - ``XNOR`` - not an exclusive disjunction
-  - ``NIMP`` - not a material implication
+  - ``XNOR`` - not an exclusive disjunction, all other logic gates are doable with this and ``NAND``
+  - ``NIMP`` - not an implication
+  - ``NMIMP`` - not a material implication
   - ``NEQV`` - not an equivalence, same as nor
 
 Structural constructors
@@ -90,8 +92,8 @@ List constructors
 
 - Internal
 
-  - ``NIL`` - a nil for the empty set
-  - ``∅`` - an empty set
+- ``NIL`` - a nil for the empty set
+- ``EMPTY`` - an empty set
 
 Church numerals
 
@@ -111,6 +113,7 @@ Number equivalence
 - ``LEQ?`` - is number a equal or smaller than b?
 - ``GEQ?`` - is number a equal or greater than b?
 - ``LE?`` - is number a less than b?
+- ``LE2?`` - is number a less than b?, version 2
 - ``GE?`` - is number a greater than b?
 
 Arithmetic constructors
@@ -132,3 +135,4 @@ Sample mathematical functions
 - ``SUMMATION`` - the nth triangular number
 - ``FACTORIAL`` - a product of numbers up to n
 - ``FIBONACCI`` - the nth Fibonacci number
+- ``FIBONACCI2`` - the nth Fibonacci number, version 2
