@@ -30,8 +30,8 @@ Common combinators
 - ``W′`` - identity
 - ``X`` - iota
 - ``X′`` - anti iota
-- ``Y`` - Y combinator
-- ``Y′`` - anti Y combinator
+- ``Y`` - Y-combinator
+- ``Y′`` - anti Y-combinator
 - ``Θ`` - anti iota
 - ``ω`` - omega
 - ``Ω`` - big omega
