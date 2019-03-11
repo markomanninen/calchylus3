@@ -70,13 +70,20 @@
         (setv ; https://en.wikipedia.org/wiki/SKI_combinator_calculus
              ; S = apply x to y in the domain of z
              S (~binder x y z [[x z] [y z]]) ; X (X (X (X X))) ≡ X K ≡ X′ (X′ X′) ≡ B (B (B W) C) (B B)
+             ; discards the second argument b
              K (~binder a b a) ; X (X (X X)) ≡ X′ X′ X′
+             ; discards the first argument a
              K′ (~binder a b b) ; X (X X) ≡ X′ X′
+             ; return the given argument aka identity function
              I (~binder x x) ; S K S ≡ S K K ≡ X X ≡ (X′ (X′ X′)) ((X′ X′) X′) X′
              ; https://en.wikipedia.org/wiki/B,_C,_K,_W_system
+             ; is the composition of the arguments x and y applied to the argument z
              B (~binder x y z [x [y z]]) ; S (K S) K
+             ; swaps the arguments y and z
              C (~binder x y z [x z y]) ; S (S (K (S (K S) K)) S) (K K)
+             ; append the second argument y
              W (~binder x y [x y y]) ; S S (K (S K K))
+             ; append the first argument x
              W′ (~binder x y [x y x]) ; X (X (X (X (X X))))
              ; all above combinators could be presented by a single iota combinator:
              X (~binder x [x S K]) ; (iota, (~binder x [x FALSE])
@@ -106,8 +113,8 @@
              XNOR (~binder a b (NOT (XOR a b))) ; (a (b FALSE TRUE) b FALSE TRUE)
              IMP (~binder a b (OR (NOT a) b)) ; (a FALSE TRUE TRUE b)
              NIMP (~binder a b (NOT (OR (NOT a) b))) ; (a FALSE TRUE TRUE b FALSE TRUE)
-             ;MIMP (~binder a b (AND (NOT a) b)) ; (a FALSE TRUE b FALSE)
-             ;NMIMP (~binder a b (NOT (AND (NOT a) b))) ; (a FALSE TRUE b FALSE FALSE TRUE)
+             MIMP (~binder a b (AND (NOT a) b)) ; (a FALSE TRUE b FALSE)
+             NMIMP (~binder a b (NOT (AND (NOT a) b))) ; (a FALSE TRUE b FALSE FALSE TRUE)
              EQV XNOR
              NEQV NOR
              ; zeros
