@@ -136,7 +136,7 @@
              EQ? (~binder m n (AND (LEQ? m n) (LEQ? n m)))
              GE? (~binder m n (NOT (LEQ? m n)))
              GEQ? (~binder m n (OR (GE? m n) (EQ? m n)))
-             ;LE? (~binder m n (NOT (GEQ? m n)))
+             LE2? (~binder m n (NOT (GEQ? m n)))
              LE? (~binder m n (NOT (LEQ? n m)))
              ; list forms
              PAIR (~binder a b s [s a b])
@@ -235,7 +235,7 @@
              ; 1 * 2 * 3 * ... * n
              FACTORIAL (~binder n (YCOMB (~binder f n [(ZERO? n) ONE (PROD n [f (PRED n)])]) n))
              ; Fn = F(n-1) + F(n-2)
-             ;FIBONACCI (~binder n (YCOMB (~binder f n [(ZERO? n) ONE (SUM [f (PRED n)] [f (PRED (PRED n))])]) (PRED n)))
+             FIBONACCI2 (~binder n (YCOMB (~binder f n [(ZERO? n) ONE (SUM [f (PRED n)] [f (PRED (PRED n))])]) (PRED n)))
              ; excludes the first two seed numbers
              FIBONACCI (~binder n (YCOMB (~binder f n [(LEQ? n TWO) n (SUM [f (PRED n)] [f (PRED (PRED n))])]) n))
              ; erastotenes prime sieve
