@@ -78,7 +78,9 @@
                   (if (function? (first x)) (normalize x) x)))) e))
       ; helper for pretty printter
       (defn repr* [e]
-        (if (coll? e) (% "(%s)" (.join " " (map repr* e))) (str e)))
+        (if (coll? e) (% "(%s)" (.join " " (map repr* e)))
+          ; there might be an anonymous function in the expression, surpress it
+          (if (and (not (function? e)) (callable e)) "" (str e))))
       ; prettier lambda function abstraction representation
       (defn repr [e]
         (if (and (coll? e) (not (function? e)))
@@ -97,11 +99,11 @@
         ; the function body to the normal head form (call by value)
         (defn --call-- [self value &rest args]
           ; if extra arguments are given then they are curryed forward
-          ; insteadd of using apply we use a slightly modified functionality with apply*
+          ; instead of using apply we use a slightly modified functionality with apply*
           ((fn [x] (if args (apply* x (list args)) x)) (normalize ((last self) value))))))
 
     ; main lambda macro
     (defmacro ~binder [&rest expr]
       (reduce (fn [body arg]
-        `((fn[] (setv ~arg(str'~arg))
+        `((fn[] (setv ~arg (str '~arg))
           (Function ['~arg ~body (fn [~arg] ~body)])))) (reverse (list expr))))))
