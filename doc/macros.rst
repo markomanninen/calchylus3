@@ -14,9 +14,29 @@ module:
 
 Basic constructors
 
-- ``APP`` - an application
 - ``CONST`` - a constant
 - ``IDENT`` - an identity
+
+Common combinators
+
+- ``S`` - apply x to y in the domain of z
+- ``K`` - take the first, leave the second
+- ``K′`` - take the second, leave the first
+- ``I`` - identity
+- ``B`` - identity
+- ``C`` - identity
+- ``W`` - identity
+- ``W′`` - identity
+- ``W′`` - identity
+- ``X`` - iota
+- ``X′`` - anti iota
+- ``Y`` - Y combinator
+- ``Y′`` - anti Y combinator
+- ``Θ`` - anti iota
+- ``ω`` - omega
+- ``Ω`` - big omega
+- ``Ω′`` - anti big omega
+
 
 Boolean constructors
 
@@ -35,14 +55,19 @@ Logical connective constructors
   - ``OR`` - a disjunction
   - ``XOR`` - an exclusive disjunction
   - ``IMP`` - a material implication
-  - ``EQV`` - an equivalence / a material biconditional
+  - ``EQV`` - an equivalence / a material biconditional, same as xnor
+  - ``NAND`` - not a conjuction
+  - ``NOR`` - not a disjunction
+  - ``XNOR`` - not an exclusive disjunction
+  - ``NIMP`` - not a material implication
+  - ``NEQV`` - not an equivalence, same as nor
 
 Structural constructors
 
 - ``COND`` - a condition block for flow control
-- ``LET`` - introduce a variable/variables with a value / values, last term is the function body!
+- ``LET`` - introduce a variable / variables with a value / values, last term is the function body!
 - ``LET*`` - same as LET, but consequencing variables can use former variables in the body
-- ``DO`` - do things in sequence, similar to ``LET*``, but except setters are disclosed
+- ``DO`` - do things in sequence, similar to ``LET*``, but setters are disclosed
 
 2-tuple constructor
 
@@ -57,6 +82,7 @@ List constructors
 - ``APPEND`` - append to the end of the list
 - ``FIRST`` - the first item of the list
 - ``SECOND`` - the second item of the list
+- ``THIRD`` - the third item of the list
 - ``LAST`` - the last item of the list
 - ``LEN`` - length of the list
 - ``EMPTY?`` - is given term an empty list?
@@ -76,6 +102,7 @@ Church numerals
   - ``ONE`` ``TWO`` ``THREE`` ``FOUR`` ``FIVE`` ``SIX`` ``SEVEN`` ``EIGHT`` ``NINE`` ``TEN``
 
 - ``NUM?`` - is given term a number, unary predicate checker for Church numbers
+- ``MUN`` - convert church number to digits
 
 Number equivalence
 
